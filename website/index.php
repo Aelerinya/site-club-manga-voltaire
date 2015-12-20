@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>Club manga</title>
-    <link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="style/style.css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
-    <?php include('includes/nav.php');?> 
+    <?php include('includes/nav.php');?>
 
     <section id="main-section">
       <h1>Club manga</h1>

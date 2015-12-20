@@ -3,7 +3,7 @@ body {
   padding: 5px;
 
   background-color: black;
-  background-image: url("pics/Death-note-wallpaper.jpg");
+  background-image: url("../pics/Death-note-wallpaper.jpg");
   background-attachment: fixed;
   background-repeat: repeat-y;
   background-position: center;
