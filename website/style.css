@@ -5,19 +5,28 @@ body {
   background-color: black;
   background-image: url("pics/Death-note-wallpaper.jpg");
   background-attachment: fixed;
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   background-position: center;
 }
 
-h1 {
+#main-section h1, #menu h4 {
   text-align: center;
+  padding: 10px;
+}
+
+#main-section, #menu {
+  display: inline-block;
+  vertical-align: top;
+  background-color: #FFF7ED;
+  border: 2px solid black;
+  border-radius: 10px;
 }
 
 #main-section {
   width: 50%;
-  margin: auto;
-  padding: 10px;
-  background-color: #FFF7ED;
-  border: 2px solid black;
-  border-radius: 10px;
+}
+
+#menu {
+  width: 15%;
+  margin-left: 10%;
 }

@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
+    <?php include('includes/nav.php');?> 
+
     <section id="main-section">
       <h1>Club manga</h1>
 
