@@ -9,14 +9,14 @@ body {
   background-position: center;
 }
 
-#main-section h1, #menu h4 {
+#main-section h1, #main-section h2, #menu h4 {
   text-align: center;
-  padding: 10px;
 }
 
 #main-section, #menu {
   display: inline-block;
   vertical-align: top;
+
   background-color: #FFF7ED;
   border: 2px solid black;
   border-radius: 10px;
@@ -24,6 +24,7 @@ body {
 
 #main-section {
   width: 50%;
+  padding: 5px;
 }
 
 #menu {
