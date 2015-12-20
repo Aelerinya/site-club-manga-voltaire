@@ -1,14 +1,31 @@
 <?php
 session_start();
+define('msg_limit', 40);
+define('max_length_user', 20);
+define('max_length_msg', 80);
 
 include('db.php');
 $db = dbInit();
 
 if (isset($_POST['user']) && isset($_POST['msg']) && strlen($_POST['user']) > 0 && strlen($_POST['msg']) > 0) {
+  setcookie('user', $_POST['user']);
 
+  $user = substr(htmlentities($_POST['user']), 0, max_length_user);
+  $msg = substr(htmlentities($_POST['msg']), 0, max_length_msg);
+
+  $insert = $db->prepare("INSERT INTO chatbox VALUES ('', ?, NOW(), ?)");
+  $insert->execute(array($user, $msg));
+
+  header('Location: chatbox.php');
 }
+$ansCount = $db->prepare('SELECT COUNT(*) count FROM chatbox');
+$ansCount->execute(array());
+$line = $ansCount->fetch();
+$count = $line['count'];
+$max = $count;
+$min = ($count > msg_limit) ? $min = $count - msg_limit : 0;
 
-$ansChat = $db->prepare("SELECT * FROM chatbox ORDER BY post_date LIMIT 40");
+$ansChat = $db->prepare("SELECT * FROM chatbox ORDER BY post_date LIMIT $min, $max");
 $ansChat->execute(array());
 
  ?>
@@ -19,6 +36,8 @@ $ansChat->execute(array());
     <title>Chatbox - Club manga</title>
     <link rel="stylesheet" href="style/style.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="style/chatbox.css" media="screen" title="no title" charset="utf-8">
+
+    <script src="script/chatbox.js" charset="utf-8" defer></script>
   </head>
   <body>
     <?php include('includes/nav.php');?>
@@ -35,8 +54,8 @@ $ansChat->execute(array());
       </div>
 
       <form action="chatbox.php" method="post">
-        <label for="user">Nom :</label><input type="text" name="user"><br />
-        <label for="msg">Message :</label><input type="text" name="msg"><br />
+        <label for="user">Nom :</label><input type="text" name="user"<?php if (isset($_COOKIE['user'])) {echo ' value="'.$_COOKIE['user'].'"';} ?>><br />
+        <label for="msg">Message :</label><input type="text" name="msg" id="msg"><br />
         <input type="submit" value="Envoyer">
       </form>
     </section>
