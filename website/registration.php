@@ -14,7 +14,7 @@ session_start();
     <section id="main-section">
       <h2>Inscription</h2>
 
-      <form action="index.html" method="post">
+      <form action="registration.php" method="post">
         <label for="name">Nom :</label><br>
         <input type="text" name="name"><br>
 
