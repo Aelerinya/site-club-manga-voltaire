@@ -31,3 +31,8 @@ body {
   width: 15%;
   margin-left: 10%;
 }
+
+.name {
+  font-weight: bold;
+  font-size: 1.1em;
+}
