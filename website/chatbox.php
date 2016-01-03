@@ -1,23 +1,25 @@
 <?php
 session_start();
 define('msg_limit', 40);
-define('max_length_user', 20);
 define('max_length_msg', 80);
 
 include('db.php');
 $db = dbInit();
 
-if (isset($_POST['user']) && isset($_POST['msg']) && strlen($_POST['user']) > 0 && strlen($_POST['msg']) > 0) {
-  setcookie('user', $_POST['user']);
+// Envoi d'un message
 
-  $user = substr(htmlentities($_POST['user']), 0, max_length_user);
+if (isset($_SESSION['connected']) && isset($_POST['msg']) && strlen($_POST['msg']) > 0)
+{
   $msg = substr(htmlentities($_POST['msg']), 0, max_length_msg);
 
   $insert = $db->prepare("INSERT INTO chatbox VALUES ('', ?, NOW(), ?)");
-  $insert->execute(array($user, $msg));
+  $insert->execute(array($_SESSION['id'], $msg));
 
   header('Location: chatbox.php');
 }
+
+//Récupération des messages
+
 $ansCount = $db->prepare('SELECT COUNT(*) count FROM chatbox');
 $ansCount->execute(array());
 $line = $ansCount->fetch();
@@ -25,7 +27,11 @@ $count = $line['count'];
 $max = $count;
 $min = ($count > msg_limit) ? $min = $count - msg_limit : 0;
 
-$ansChat = $db->prepare("SELECT * FROM chatbox ORDER BY post_date LIMIT $min, $max");
+$ansChat = $db->prepare("SELECT c.post_date post_date, c.message message, m.pseudo pseudo
+                         FROM chatbox c
+                         INNER JOIN members m ON c.user = m.id
+                         ORDER BY c.post_date
+                         LIMIT $min, $max");
 $ansChat->execute(array());
 
  ?>
@@ -46,18 +52,25 @@ $ansChat->execute(array());
       <h2>Chatbox</h2>
 
       <div id="chatbox">
-        <?php while ($line = $ansChat->fetch()) {
+        <?php //Affichage des messages
+
+        while ($line = $ansChat->fetch()) {
           $date = preg_replace('#^.{11}(.{2}):(.{2}):.{2}$#', '$1:$2', $line['post_date']);
         ?>
-        <p><?=$date?> : <span class="name"><?=$line['user']?></span> : <?=$line['message']?></p>
+        <p><?=$date?> : <span class="name"><?=$line['pseudo']?></span> : <?=$line['message']?></p>
         <?php } ?>
       </div>
 
+      <?php //Affichage du formulaire d'envoi d'un message si connecté
+
+      if (isset($_SESSION['connected'])) { ?>
       <form action="chatbox.php" method="post">
-        <label for="user">Nom :</label><input type="text" name="user"<?php if (isset($_COOKIE['user'])) {echo ' value="'.$_COOKIE['user'].'"';} ?>><br />
         <label for="msg">Message :</label><input type="text" name="msg" id="msg"><br />
         <input type="submit" value="Envoyer">
       </form>
+      <?php } else { ?>
+        <p>Vous devez être connecté pour utiliser la chatbox.</p>
+      <?php } ?>
     </section>
   </body>
 </html>
