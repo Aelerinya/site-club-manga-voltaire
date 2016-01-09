@@ -11,7 +11,7 @@ if (!isset($_SESSION['connected']) && isset($_POST['pseudo']) && $_POST['pseudo'
   $pseudo = htmlentities($_POST['pseudo']);
   $pwd = $_POST['pwd'];
 
-  include('db.php');
+  include('../db.php');
   $db = dbInit();
 
   $answer = $db->prepare("SELECT id, pseudo, password FROM members WHERE pseudo = ?");

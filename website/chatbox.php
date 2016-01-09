@@ -3,7 +3,7 @@ session_start();
 define('msg_limit', 40);
 define('max_length_msg', 80);
 
-include('db.php');
+include('../db.php');
 $db = dbInit();
 
 // Envoi d'un message

@@ -20,7 +20,7 @@ if (!isset($_SESSION['connected']) && isset($_POST['pseudo']) && isset($_POST['e
   $errPwd = (strlen($_POST['pwd1']) >= 6 && strlen($_POST['pwd1']) <= 255) ? false : true;
   $errEmail = (preg_match('#^[a-z0-9_.-]+@[a-z0-9_.-]{2,}\.[a-z]{2,4}$#', $_POST['email1'])) ? false : true;
 
-  include_once('db.php');
+  include_once('../db.php');
   $db = dbInit();
 
   $answer = $db->prepare('SELECT id FROM members WHERE pseudo = ?');
