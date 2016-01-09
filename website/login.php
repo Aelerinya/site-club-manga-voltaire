@@ -78,8 +78,8 @@ else
     <h2>Connexion</h2>
 
     <form action="login.php" method="post">
-      <label for="pseudo">Pseudo :</label><input type="text" name="pseudo"><br>
-      <label for="pwd">Mot de passe :</label><input type="password" name="pwd"><br>
+      <label for="pseudo">Pseudo :</label><input type="text" name="pseudo" id="pseudo"><br>
+      <label for="pwd">Mot de passe :</label><input type="password" name="pwd" id="pwd"><br>
       <input type="submit" value="Connexion"><input type="reset" value="Annuler">
     </form>
     <?php  if ($error) { ?>

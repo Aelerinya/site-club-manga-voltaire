@@ -86,21 +86,21 @@ else
 
       <form action="registration.php" method="post">
         <label for="pseudo">Pseudo :</label><br>
-        <input type="text" name="pseudo" maxlength="20"><?php if ($errPseudo) {echo "<span class=\"error\">Votre pseudo doit faire entre 3 et 20 caractères.</span>";} else if ($errUsedPseudo) {echo "<span class=\"error\">Ce pseudo est déjà utilisé.</span>";}?><br>
+        <input type="text" name="pseudo" id="pseudo" maxlength="20"><?php if ($errPseudo) {echo "<span class=\"error\">Votre pseudo doit faire entre 3 et 20 caractères.</span>";} else if ($errUsedPseudo) {echo "<span class=\"error\">Ce pseudo est déjà utilisé.</span>";}?><br>
 
         <label for="email1">Email :</label><br>
-        <input type="email" name="email1" maxlength="255"><?php if ($errEmail) {echo "<span class=\"error\">Votre adresse email n'est pas conforme.</span>";} else if ($errUsedEmail) {echo "<span class=\"error\">Cet adresse email est déjà utilisée.</span>";}?><br>
+        <input type="email" name="email1" id="email1" maxlength="255"><?php if ($errEmail) {echo "<span class=\"error\">Votre adresse email n'est pas conforme.</span>";} else if ($errUsedEmail) {echo "<span class=\"error\">Cet adresse email est déjà utilisée.</span>";}?><br>
 
         <label for="email2">Confirmez votre email :</label><br>
-        <input type="email" name="email2" maxlength="255" autocomplete="off"><?php if ($errSameEmail) {echo "<span class=\"error\">Les deux adresses emails ne sont pas identiques.</span>";}?><br>
+        <input type="email" name="email2" id="email2" maxlength="255" autocomplete="off"><?php if ($errSameEmail) {echo "<span class=\"error\">Les deux adresses emails ne sont pas identiques.</span>";}?><br>
 
         <label for="pwd1">Mot de passe :</label><br>
-        <input type="password" name="pwd1" maxlength="255"><?php if ($errPwd) {echo "<span class=\"error\">Votre mot de passe doit faire au moins 6 caractères.</span>";}?><br>
+        <input type="password" name="pwd1" id="pwd1" maxlength="255"><?php if ($errPwd) {echo "<span class=\"error\">Votre mot de passe doit faire au moins 6 caractères.</span>";}?><br>
 
         <label for="pwd2">Confirmez votre mot de passe :</label><br>
-        <input type="password" name="pwd2" maxlength="255" autocomplete="off"><?php if ($errSamePwd) {echo "<span class=\"error\">Les deux mots de passe ne sont pas identiques.</span>";}?><br>
+        <input type="password" name="pwd2" id="pwd2" maxlength="255" autocomplete="off"><?php if ($errSamePwd) {echo "<span class=\"error\">Les deux mots de passe ne sont pas identiques.</span>";}?><br>
 
-        <input type="submit" value="S'inscrire" maxlength="255"><input type="reset" value="Annuler">
+        <input type="submit" value="S'inscrire"><input type="reset" value="Annuler">
       </form>
 <?php
 }
