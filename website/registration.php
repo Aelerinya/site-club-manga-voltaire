@@ -61,7 +61,7 @@ if (!isset($_SESSION['connected']) && isset($_POST['pseudo']) && isset($_POST['e
   <head>
     <meta charset="utf-8">
     <title>Inscription - Club manga</title>
-    <link rel="stylesheet" href="style/style.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="style/style.css" media="screen" title="no title">
   </head>
   <body>
     <?php include('includes/nav.php');?>

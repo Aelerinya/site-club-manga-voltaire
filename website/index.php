@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <title>Club manga</title>
-    <link rel="stylesheet" href="style/style.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="style/style.css" media="screen" title="no title">
   </head>
   <body>
     <?php include('includes/nav.php');?>
