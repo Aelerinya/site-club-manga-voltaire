@@ -39,7 +39,7 @@ $ansChat->execute(array());
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Chatbox - Club manga</title>
+    <title>Chatbox - Club manga Voltaire</title>
     <link rel="stylesheet" href="style/style.css" media="screen" title="no title">
     <link rel="stylesheet" href="style/chatbox.css" media="screen" title="no title">
 

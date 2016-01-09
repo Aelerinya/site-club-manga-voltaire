@@ -44,7 +44,7 @@ else if (isset($_POST['action']) && $_POST['action'] == 'logout' && isset($_SESS
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Inscription - Club manga</title>
+    <title>Inscription - Club manga Voltaire</title>
     <link rel="stylesheet" href="style/style.css" media="screen" title="no title">
   </head>
   <body>

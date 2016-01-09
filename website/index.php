@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Club manga</title>
+    <title>Club manga du lycée Voltaire</title>
     <link rel="stylesheet" href="style/style.css" media="screen" title="no title">
   </head>
   <body>

@@ -60,7 +60,7 @@ if (!isset($_SESSION['connected']) && isset($_POST['pseudo']) && isset($_POST['e
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Inscription - Club manga</title>
+    <title>Inscription - Club manga Voltaire</title>
     <link rel="stylesheet" href="style/style.css" media="screen" title="no title">
   </head>
   <body>
