@@ -8,12 +8,18 @@
     <?php include_once('includes/head.php'); ?>
   </head>
   <body>
-    <?php include('includes/nav.php');?>
+    <?php include('includes/header.php'); ?>
 
-    <section id="main-section">
-      <h1>Club manga</h1>
+    <section id="central">
+      <?php include('includes/nav.php');?>
 
-      <p>Bienvenue sur le futur site du club manga du lycée Voltaire.</p>
+      <div id="box-main-section">
+        <section id="main-section">
+          <h1>Club manga</h1>
+
+          <p>Bienvenue sur le futur site du club manga du lycée Voltaire.</p>
+        </section>
+      </div>
     </section>
   </body>
 </html>

@@ -47,31 +47,37 @@ $ansChat->execute(array());
     <script src="script/chatbox.js" charset="utf-8" defer></script>
   </head>
   <body>
-    <?php include('includes/nav.php');?>
+    <?php include('includes/header.php'); ?>
 
-    <section id="main-section">
-      <h2>Chatbox</h2>
+    <section id="central">
+      <?php include('includes/nav.php');?>
 
-      <div id="chatbox">
-        <?php //Affichage des messages
+      <div id="box-main-section">
+        <section id="main-section">
+          <h2>Chatbox</h2>
 
-        while ($line = $ansChat->fetch()) {
-          $date = preg_replace('#^.{11}(.{2}):(.{2}):.{2}$#', '$1:$2', $line['post_date']);
-        ?>
-        <p><?=$date?> : <span class="name"><?=$line['pseudo']?></span> : <?=$line['message']?></p>
-        <?php } ?>
+          <div id="chatbox">
+            <?php //Affichage des messages
+
+            while ($line = $ansChat->fetch()) {
+              $date = preg_replace('#^.{11}(.{2}):(.{2}):.{2}$#', '$1:$2', $line['post_date']);
+            ?>
+            <p><?=$date?> : <span class="name"><?=$line['pseudo']?></span> : <?=$line['message']?></p>
+            <?php } ?>
+          </div>
+
+          <?php //Affichage du formulaire d'envoi d'un message si connecté
+
+          if (isset($_SESSION['connected'])) { ?>
+          <form action="chatbox.php" method="post">
+            <label for="msg">Message :</label><input type="text" name="msg" id="msg"><br />
+            <input type="submit" value="Envoyer">
+          </form>
+          <?php } else { ?>
+            <p>Vous devez être connecté pour utiliser la chatbox.</p>
+          <?php } ?>
+        </section>
       </div>
-
-      <?php //Affichage du formulaire d'envoi d'un message si connecté
-
-      if (isset($_SESSION['connected'])) { ?>
-      <form action="chatbox.php" method="post">
-        <label for="msg">Message :</label><input type="text" name="msg" id="msg"><br />
-        <input type="submit" value="Envoyer">
-      </form>
-      <?php } else { ?>
-        <p>Vous devez être connecté pour utiliser la chatbox.</p>
-      <?php } ?>
     </section>
   </body>
 </html>

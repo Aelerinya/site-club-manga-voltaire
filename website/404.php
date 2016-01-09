@@ -8,12 +8,18 @@
     <?php include_once('includes/head.php'); ?>
   </head>
   <body>
-    <?php include('includes/nav.php');?>
+    <?php include('includes/header.php'); ?>
 
-    <section id="main-section">
-      <h1>Club manga Voltaire</h1>
+    <section id="central">
+      <?php include('includes/nav.php');?>
 
-      <p>Erreur 404 ! La page à laquelle vous avez tenté d'accéder n'existe pas, n'est plus disponible, ou a changé d'adresse. Vous pouvez retourner sur une page du site en cliquant sur un des liens dans le menu.</p>
+      <div id="box-main-section">
+        <section id="main-section">
+          <h1>Club manga Voltaire</h1>
+
+          <p>Erreur 404 ! La page à laquelle vous avez tenté d'accéder n'existe pas, n'est plus disponible, ou a changé d'adresse. Vous pouvez retourner sur une page du site en cliquant sur un des liens dans le menu.</p>
+        </section>
+      </div>
     </section>
   </body>
 </html>

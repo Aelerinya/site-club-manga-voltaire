@@ -1,6 +1,6 @@
 var BtMenu = document.getElementById("BtMenu"),
-  mainSection = document.getElementById("main-section"),
-  menu = document.getElementById("menu");
+  mainSection = document.getElementById("box-main-section"),
+  menu = document.getElementById("box-menu");
 var menuDisplayed = false;
 
 BtMenu.addEventListener('click', function () {

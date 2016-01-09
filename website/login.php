@@ -49,9 +49,13 @@ else if (isset($_POST['action']) && $_POST['action'] == 'logout' && isset($_SESS
     <?php include_once('includes/head.php'); ?>
   </head>
   <body>
-    <?php include('includes/nav.php');?>
+    <?php include('includes/header.php'); ?>
 
-    <section id="main-section">
+    <section id="central">
+      <?php include('includes/nav.php');?>
+
+      <div id="box-main-section">
+        <section id="main-section">
 <?php
 
 if ($displayLoginMsg)
@@ -76,19 +80,21 @@ else if (isset($_SESSION['connected']))
 else
 {
   ?>
-    <h2>Connexion</h2>
+        <h2>Connexion</h2>
 
-    <form action="login.php" method="post">
-      <label for="pseudo">Pseudo :</label><input type="text" name="pseudo" id="pseudo"><br>
-      <label for="pwd">Mot de passe :</label><input type="password" name="pwd" id="pwd"><br>
-      <input type="submit" value="Connexion"><input type="reset" value="Annuler">
-    </form>
+        <form action="login.php" method="post">
+          <label for="pseudo">Pseudo :</label><input type="text" name="pseudo" id="pseudo"><br>
+          <label for="pwd">Mot de passe :</label><input type="password" name="pwd" id="pwd"><br>
+          <input type="submit" value="Connexion"><input type="reset" value="Annuler">
+        </form>
     <?php  if ($error) { ?>
       <p>Mauvais mot de passe ou pseudo.</p>
     <?php } ?>
   <?php
 }
 ?>
+        </section>
+      </div>
     </section>
   </body>
 </html>

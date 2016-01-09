@@ -1,15 +1,29 @@
 body {
   margin: 0;
-  padding: 5px;
-
-  display: flex;
-  justify-content: center;
 
   background-color: black;
   background-image: url("../pics/Death-note-wallpaper.jpg");
   background-attachment: fixed;
   background-repeat: repeat-y;
   background-position: center;
+}
+
+header {
+  background-color: #FFF7ED;
+  border-bottom: 3px solid black;
+
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+header h1{
+  margin: 0;
+  padding-top: 10px;
+}
+
+#central {
+  display: flex;
+  justify-content: center;
 }
 
 #main-section h1, #main-section h2, #menu h4 {
@@ -23,12 +37,15 @@ body {
 }
 
 #main-section {
-  width: 50%;
   padding: 5px;
+}
+
+#box-main-section {
+  width: 50%;
   margin-left: 10px;
 }
 
-#menu {
+#box-menu {
   width: 15%;
 }
 
@@ -41,18 +58,18 @@ body {
 
 /* Adaptation écran moyen */
 @media all and (min-width: 700px) and (max-width: 1000px){
-  #main-section {flex: 7;}
-  #menu {flex: 2;}
+  #box-main-section {flex: 7;}
+  #box-menu {flex: 2;}
 }
 
 /* Adaptation pour mobile */
 @media all and (max-width: 700px){
-  #main-section, #menu {
+  #box-main-section, #box-menu {
     width: 100%;
     margin: 0;
     padding: 0;
   }
 
-  body, #BtMenu {display: block;}
-  #menu {display: none;}
+  #central, #BtMenu {display: block;}
+  #box-menu {display: none;}
 }
