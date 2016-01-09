@@ -45,7 +45,8 @@ else if (isset($_POST['action']) && $_POST['action'] == 'logout' && isset($_SESS
   <head>
     <meta charset="utf-8">
     <title>Inscription - Club manga Voltaire</title>
-    <link rel="stylesheet" href="style/style.css" media="screen" title="no title">
+
+    <?php include_once('includes/head.php'); ?>
   </head>
   <body>
     <?php include('includes/nav.php');?>

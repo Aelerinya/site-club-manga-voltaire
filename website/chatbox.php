@@ -40,8 +40,9 @@ $ansChat->execute(array());
   <head>
     <meta charset="utf-8">
     <title>Chatbox - Club manga Voltaire</title>
-    <link rel="stylesheet" href="style/style.css" media="screen" title="no title">
     <link rel="stylesheet" href="style/chatbox.css" media="screen" title="no title">
+
+    <?php include_once('includes/head.php'); ?>
 
     <script src="script/chatbox.js" charset="utf-8" defer></script>
   </head>

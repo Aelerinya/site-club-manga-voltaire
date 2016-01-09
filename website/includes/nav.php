@@ -1,3 +1,5 @@
+<img src="pics/button.png" alt="Button menu" id="BtMenu">
+
 <nav id="menu">
   <h4>Menu</h4>
 
@@ -15,4 +17,3 @@
     <?php } ?>
   </ul>
 </nav>
-<script src="script/logout.js" defer></script>
