@@ -15,7 +15,7 @@
 
       <div id="box-main-section">
         <section id="main-section">
-          <h1>Club manga</h1>
+          <h2>Club manga</h2>
 
           <p>Bienvenue sur le futur site du club manga du lycée Voltaire.</p>
         </section>

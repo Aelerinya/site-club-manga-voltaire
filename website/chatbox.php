@@ -1,7 +1,7 @@
 <?php
 session_start();
 define('msg_limit', 40);
-define('max_length_msg', 80);
+define('max_length_msg', 255);
 
 include('../db.php');
 $db = dbInit();
