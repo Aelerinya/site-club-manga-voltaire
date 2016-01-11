@@ -10,12 +10,37 @@ $db = dbInit();
 
 if (isset($_SESSION['connected']) && isset($_POST['msg']) && strlen($_POST['msg']) > 0)
 {
+  $toValid = true;
   $msg = substr(htmlentities($_POST['msg']), 0, max_length_msg);
 
-  $insert = $db->prepare("INSERT INTO chatbox VALUES ('', ?, NOW(), ?)");
-  $insert->execute(array($_SESSION['id'], $msg));
+  if (isset($_POST['to']) && strlen($_POST['to']) > 0)
+  {
+    setcookie('to_pseudo', $_POST['to']);
+    $answer = $db->prepare('SELECT id FROM members WHERE pseudo = ?');
+    $answer->execute(array(htmlentities($_POST['to'])));
 
-  header('Location: chatbox.php');
+    if ($line = $answer->fetch())
+    {
+      $to = $line['id'];
+    }
+    else
+    {
+      $toValid = false;
+    }
+  }
+  else
+  {
+    $to = '';
+    setcookie('to_pseudo', '');
+  }
+
+  if ($toValid)
+  {
+    $insert = $db->prepare("INSERT INTO chatbox VALUES ('', ?, NOW(), ?, ?)");
+    $insert->execute(array($_SESSION['id'], $msg, $to));
+
+    header('Location: chatbox.php');
+  }
 }
 
 //Récupération des messages
@@ -27,12 +52,14 @@ $count = $line['count'];
 $max = $count;
 $min = ($count > msg_limit) ? $min = $count - msg_limit : 0;
 
-$ansChat = $db->prepare("SELECT c.post_date post_date, c.message message, m.pseudo pseudo
+$ansChat = $db->prepare("SELECT c.post_date post_date, c.message message, m.pseudo pseudo, c.to_user to_id, mTo.pseudo to_pseudo
                          FROM chatbox c
+                         LEFT JOIN members mTo ON c.to_user = mTo.id
                          INNER JOIN members m ON c.user = m.id
+                         WHERE c.to_user = '' OR c.to_user = ? OR c.user = ?
                          ORDER BY c.post_date
                          LIMIT $min, $max");
-$ansChat->execute(array());
+$ansChat->execute(array($_SESSION['id'], $_SESSION['id']));
 
  ?>
 <!DOCTYPE html>
@@ -61,8 +88,20 @@ $ansChat->execute(array());
 
             while ($line = $ansChat->fetch()) {
               $date = preg_replace('#^.{11}(.{2}):(.{2}):.{2}$#', '$1:$2', $line['post_date']);
+
+              if ($line['to_id']) {
+                if ($line['to_id'] == $_SESSION['id']) {
+                  $pseudo = '<span class="name pseudo">'.$line["pseudo"].'</span> vous chuchotte';
+                } else {
+                  $pseudo = 'Vous chuchottez à <span class="name pseudo">'.$line["to_pseudo"].'</span>';
+                }
+
+              }
+              else {
+                $pseudo = '<span class="name pseudo">'.$line["pseudo"].'</span>';
+              }
             ?>
-            <p><?=$date?> : <span class="name"><?=$line['pseudo']?></span> : <?=$line['message']?></p>
+            <p><?=$date?> : <?=$pseudo?> : <?=$line['message']?></p>
             <?php } ?>
           </div>
 
@@ -70,7 +109,9 @@ $ansChat->execute(array());
 
           if (isset($_SESSION['connected'])) { ?>
           <form action="chatbox.php" method="post">
-            <label for="msg">Message :</label><input type="text" name="msg" id="msg"><br />
+            <label for="msg">Message :</label><input type="text" name="msg" id="msg"><br/>
+            <label for="to">Chuchotter à :</label><input type="text" name="to" id="to"<?php echo (isset($_COOKIE['to_pseudo']) && $_COOKIE['to_pseudo'] != '') ? 'value="'.$_COOKIE['to_pseudo'].'"' : ''; ?>><span id="rmTo">[x]</span>
+            <?php if (isset($toValid) && !$toValid) {echo "Cette personne n'existe pas.";}?><br>
             <input type="submit" value="Envoyer">
           </form>
           <?php } else { ?>
