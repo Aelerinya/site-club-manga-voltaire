@@ -45,21 +45,45 @@ if (isset($_SESSION['connected']) && isset($_POST['msg']) && strlen($_POST['msg'
 
 //Récupération des messages
 
-$ansCount = $db->prepare('SELECT COUNT(*) count FROM chatbox');
-$ansCount->execute(array());
+if (isset($_SESSION['connected']))
+{
+  $ansCount = $db->prepare("SELECT COUNT(*) count
+                            FROM chatbox
+                            WHERE to_user = '' OR to_user = ? OR user = ?
+                            ORDER BY post_date");
+  $ansCount->execute(array($_SESSION['id'], $_SESSION['id']));
+}
+else
+{
+  $ansCount = $db->prepare("SELECT COUNT(*) count FROM chatbox ORDER BY post_date");
+  $ansCount->execute(array());
+}
+
 $line = $ansCount->fetch();
 $count = $line['count'];
 $max = $count;
 $min = ($count > msg_limit) ? $min = $count - msg_limit : 0;
 
-$ansChat = $db->prepare("SELECT c.post_date post_date, c.message message, m.pseudo pseudo, c.to_user to_id, mTo.pseudo to_pseudo
-                         FROM chatbox c
-                         LEFT JOIN members mTo ON c.to_user = mTo.id
-                         INNER JOIN members m ON c.user = m.id
-                         WHERE c.to_user = '' OR c.to_user = ? OR c.user = ?
-                         ORDER BY c.post_date
-                         LIMIT $min, $max");
-$ansChat->execute(array($_SESSION['id'], $_SESSION['id']));
+if (isset($_SESSION['connected']))
+{
+  $ansChat = $db->prepare("SELECT c.post_date post_date, c.message message, m.pseudo pseudo, c.to_user to_id, mTo.pseudo to_pseudo
+                           FROM chatbox c
+                           LEFT JOIN members mTo ON c.to_user = mTo.id
+                           INNER JOIN members m ON c.user = m.id
+                           WHERE c.to_user = '' OR c.to_user = ? OR c.user = ?
+                           ORDER BY c.post_date
+                           LIMIT $min, $max");
+  $ansChat->execute(array($_SESSION['id'], $_SESSION['id']));
+}
+else
+{
+  $ansChat = $db->prepare("SELECT c.post_date post_date, c.message message, m.pseudo pseudo
+                           FROM chatbox c
+                           INNER JOIN members m ON c.user = m.id
+                           ORDER BY c.post_date
+                           LIMIT $min, $max");
+  $ansChat->execute(array());
+}
 
  ?>
 <!DOCTYPE html>
@@ -89,7 +113,7 @@ $ansChat->execute(array($_SESSION['id'], $_SESSION['id']));
             while ($line = $ansChat->fetch()) {
               $date = preg_replace('#^.{11}(.{2}):(.{2}):.{2}$#', '$1:$2', $line['post_date']);
 
-              if ($line['to_id']) {
+              if (isset($_SESSION['connected']) && $line['to_id']) {
                 if ($line['to_id'] == $_SESSION['id']) {
                   $pseudo = '<span class="name pseudo">'.$line["pseudo"].'</span> vous chuchotte';
                 } else {
