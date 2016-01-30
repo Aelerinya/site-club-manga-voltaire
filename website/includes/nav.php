@@ -8,6 +8,7 @@
       <li><a href="index.php">Acceuil</a></li>
       <li><a href="chatbox.php">Chatbox</a></li>
       <?php if (isset($_SESSION['connected'])) { ?>
+      <li><a href="calender.php">Calendrier</a></li>
       <li><a href="#" id="logout">Déconnexion</a></li>
       <form id="logoutForm" action="login.php" method="post">
         <input type="hidden" name="action" value="logout">

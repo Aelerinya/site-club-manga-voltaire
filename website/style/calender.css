@@ -1,0 +1,21 @@
+#calender
+{
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#calender td, #calender th
+{
+  border: 1px solid black;
+  padding: 2px;
+  vertical-align: top;
+}
+
+#calender td p {
+  margin: 0;
+}
+
+#dateH, #titleH
+{
+  width: 20%;
+}
