@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+define('rank_add_event', 2);
+
 $msgNotConnected = false;
 $msgNotAccess = false;
 
@@ -23,12 +25,36 @@ if (isset($_SESSION['connected']))
 
     $noEvents = true;
 
+    if ($_SESSION['rank'] >= 2 && isset($_POST['title']) && isset($_POST['date']) && isset($_POST['start']) && isset($_POST['end']) && isset($_POST['desc']))
+    {
+      echo $_POST['desc'];
+      if (preg_match('#^\d{2}/\d{2}/\d{4}$#', $_POST['date'])
+        && preg_match('#^\d{2}h\d{2}$#', $_POST['start'])
+        && preg_match('#^\d{2}h\d{2}$#', $_POST['end'])
+        && strlen($_POST['title']) > 0
+        && strlen($_POST['desc']) > 0)
+      {
+        echo "2";
+        $date = preg_replace('#^(\d{2})/(\d{2})/(\d{4})$#', '$3-$2-$1', $_POST['date']);
+        $start = preg_replace('#^(\d{2})h(\d{2})$#', '$1:$2:00', $_POST['start']);
+        $end = preg_replace('#^(\d{2})h(\d{2})$#', '$1:$2:00', $_POST['end']);
+
+        $title = htmlentities($_POST['title']);
+        $desc = htmlentities($_POST['desc']);
+
+        $insert = $db->prepare('INSERT INTO calender VALUES ("", ?, ?, ?, ?, ?, ?)');
+        $insert->execute(array($title, $date, $start, $end, $_SESSION['id'], $desc));
+
+        header('Location: calender.php');
+      }
+    }
+
     //Récupération des évènements
-    $answerCalender = $db->prepare("SELECT c.title title, c.description description, DAY(c.start_time) day_event, c.start_time start_time, c.end_time end_time, m.pseudo pseudo
+    $answerCalender = $db->prepare("SELECT c.title title, c.description description, Day(c.date_event) day_event, c.date_event date_event, c.start start, c.end end, m.pseudo pseudo
       FROM calender c
       INNER JOIN members m ON m.id = c.user
-      WHERE DAY(c.start_time) = DAY(c.end_time) AND MONTH(c.start_time) = ? AND YEAR(c.start_time) = ?
-      ORDER BY c.start_time");
+      WHERE  MONTH(c.date_event) = ? AND YEAR(c.date_event) = ?
+      ORDER BY c.start");
     $answerCalender->execute(array($curMonth, $curYear));
 
 
@@ -71,6 +97,20 @@ else {
           //Affichage de la page
           else
           {
+            if ($_SESSION['rank'] >= rank_add_event)
+            {
+              ?>
+                <form action="calender.php" method="post">
+                  <label for="title">Titre :</label><input type="text" name="title" id="title"><br>
+                  <label for="date">Date : </label><input type="text" name="date" placeholder="Ex: 29/02/2016"><br>
+                  <label for="start">Heure de début : </label><input type="text" name="start" placeholder="Ex: 18h32"><br>
+                  <label for="end">Heure de fin : </label><input type="text" name="end" placeholder="Ex: 18h34"><br>
+                  <label for="desc">Description :</label><br>
+                  <textarea id="desc" name="desc"></textarea>
+                  <input type="submit" value="Envoyer">
+                </form>
+              <?php
+            }
             ?>
               <table id="calender">
                 <thead>
@@ -83,10 +123,11 @@ else {
             {
               //Affichage des événements
               $noEvents = false;
-              $date = preg_replace('#^(.{4})\-(.{2})\-(.{2}) (.{2}):(.{2}):.{2}$#', '$3/$2/$1 de $4h$5 à ', $line["start_time"]) . preg_replace('#^.{11}(.{2}):(.{2}):.{2}$#', '$1h$2', $line['end_time']);
+              $date = "Le ". preg_replace('#^(.{4})\-(.{2})\-(.{2})$#', '$3/$2/$1', $line["date_event"]) . " de " . preg_replace('#^(.{2}):(.{2}):.{2}$#', '$1h$2', $line['start']) . " à " . preg_replace('#^(.{2}):(.{2}):.{2}$#', '$1h$2', $line['end']);
+              $desc = preg_replace('#\n#', '<br>', $line['description']);
               ?>
               <tr>
-                <td><?=$date?></td><td><?=$line['title']?></td><td><?=$line['description']?></td>
+                <td><?=$date?></td><td><?=$line['title']?></td><td><?=$desc?></td>
               </tr>
               <?php
             }

@@ -14,7 +14,7 @@ if (!isset($_SESSION['connected']) && isset($_POST['pseudo']) && $_POST['pseudo'
   include('../db.php');
   $db = dbInit();
 
-  $answer = $db->prepare("SELECT id, pseudo, password FROM members WHERE pseudo = ?");
+  $answer = $db->prepare("SELECT id, pseudo, password, rank FROM members WHERE pseudo = ?");
   $answer->execute(array($pseudo));
 
   $error = ($line = $answer->fetch()) ? false : true;
@@ -28,6 +28,7 @@ if (!isset($_SESSION['connected']) && isset($_POST['pseudo']) && $_POST['pseudo'
       $_SESSION['connected'] = true;
       $_SESSION['id'] = $line['id'];
       $_SESSION['pseudo'] = $line['pseudo'];
+      $_SESSION['rank'] = $line['rank'];
       $displayLoginMsg = true;
     }
   }
