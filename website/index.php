@@ -18,6 +18,15 @@
           <h2>Club manga</h2>
 
           <p>Bienvenue sur le futur site du club manga du lycée Voltaire.</p>
+
+          <p>
+            Les membres ont pour l'instant accès à :
+            <ul>
+              <li>Une chatbox</li>
+              <li>Un calendrier des événements du club</li>
+              <li><em>Bientôt</em> un forum</li>
+            </ul>
+          </p>
         </section>
       </div>
     </section>
